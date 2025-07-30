@@ -5,39 +5,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Your Hologram CV</title>
   <link rel="stylesheet" href="style.css">
+  <!-- Libraries for PDF Download -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
-  <div class="avatar">
-  <img id="cvPhoto" alt="Profile Photo">
-</div>
-<h1 class="glow-text" id="cvName"></h1>
 
-  <div class="holo-container">
+  <!-- ✅ CV Container for PDF -->
+  <div class="cv-container">
+    <!-- Avatar -->
+    <div class="avatar">
+      <img id="cvPhoto" alt="Profile Photo">
+    </div>
+
+    <!-- Name & Contact -->
     <h1 class="glow-text" id="cvName"></h1>
     <p class="glow-sub" id="cvEmail"></p>
     <p class="glow-sub" id="cvPhone"></p>
+
+    <!-- About -->
     <div class="holo-section">
       <h2 class="section-title">About Me</h2>
       <p id="cvAbout"></p>
     </div>
+
+    <!-- Skills -->
     <div class="holo-section">
       <h2 class="section-title">Skills</h2>
       <ul id="cvSkills" class="holo-list"></ul>
     </div>
+
+    <!-- Experience -->
     <div class="holo-section">
       <h2 class="section-title">Experience</h2>
       <p id="cvExperience"></p>
     </div>
+
+    <!-- Education -->
     <div class="holo-section">
       <h2 class="section-title">Education</h2>
       <p id="cvEducation"></p>
     </div>
-    <button id="downloadBtn" class="button">Download CV</button>
-
   </div>
+
+  <!-- ✅ Download Button -->
+  <button id="downloadBtn" class="button">Download CV</button>
 
   <script src="script.js"></script>
 </body>
