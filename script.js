@@ -53,19 +53,20 @@ if (window.location.pathname.includes('cv.html')) {
     }
   }
 
-  // ✅ Download CV as PDF
-  const downloadBtn = document.getElementById('downloadBtn');
-  if (downloadBtn) {
-    downloadBtn.addEventListener('click', () => {
-      const cvSection = document.querySelector('.cv-container'); // wrapper div of CV
-      html2canvas(cvSection, { scale: 2 }).then(canvas => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
-        const width = pdf.internal.pageSize.getWidth();
-        const height = (canvas.height * width) / canvas.width;
-        pdf.addImage(imgData, 'PNG', 0, 0, width, height);
-        pdf.save('My_CV.pdf');
-      });
-    });
-  }
-}
+  document.getElementById('downloadBtn').addEventListener('click', () => {
+  const cvSection = document.getElementById('cvSection');
+
+  html2canvas(cvSection, { 
+    scale: 3,          // Higher resolution for better quality
+    useCORS: true      // For external images/fonts
+  }).then(canvas => {
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
+
+    const width = pdf.internal.pageSize.getWidth();
+    const height = (canvas.height * width) / canvas.width;
+
+    pdf.addImage(imgData, 'PNG', 0, 0, width, height);
+    pdf.save('My_CV.pdf');
+  });
+});
