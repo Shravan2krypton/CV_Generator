@@ -1,117 +1,71 @@
-* {margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',sans-serif;}
+// ✅ Handle CV form submission
+const cvForm = document.getElementById('cvForm');
 
-body {
-  background:#000;
-  color:#0ff;
-  display:flex;
-  justify-content:center;
-  align-items:flex-start;
-  min-height:100vh;
-  padding:2rem;
-  background-image:radial-gradient(#0ff2, #000);
+if (cvForm) {
+  cvForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const photoFile = document.getElementById('photo').files[0];
+    const reader = new FileReader();
+
+    // Save CV data function
+    const saveData = (photoBase64 = "") => {
+      const data = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        about: document.getElementById('about').value,
+        skills: document.getElementById('skills').value,
+        experience: document.getElementById('experience').value,
+        education: document.getElementById('education').value,
+        photo: photoBase64
+      };
+      localStorage.setItem('cvData', JSON.stringify(data));
+      window.location.href = "cv.html";
+    };
+
+    if (photoFile) {
+      reader.onload = function () {
+        saveData(reader.result); // Save with photo
+      };
+      reader.readAsDataURL(photoFile);
+    } else {
+      saveData(""); // Save without photo
+    }
+  });
 }
 
-.avatar {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 1rem;
-  position: relative;
-}
+// ✅ Populate CV on cv.html
+if (window.location.pathname.includes('cv.html')) {
+  const data = JSON.parse(localStorage.getItem('cvData'));
 
-.avatar img {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  border: 3px solid #0ff;
-  box-shadow: 0 0 20px #0ff, 0 0 40px #0ff5;
-}
+  if (data) {
+    document.getElementById('cvName').innerText = data.name;
+    document.getElementById('cvEmail').innerText = data.email;
+    document.getElementById('cvPhone').innerText = data.phone;
+    document.getElementById('cvAbout').innerText = data.about;
+    document.getElementById('cvSkills').innerText = data.skills;
+    document.getElementById('cvExperience').innerText = data.experience;
+    document.getElementById('cvEducation').innerText = data.education;
 
+    if (data.photo && document.getElementById('cvPhoto')) {
+      document.getElementById('cvPhoto').src = data.photo;
+    }
+  }
 
-.holo-container {
-  width:90%;
-  max-width:800px;
-  border:2px solid #0ff;
-  padding:2rem;
-  border-radius:20px;
-  background:rgba(0,255,255,0.05);
-  box-shadow:0 0 30px #0ff5, inset 0 0 10px #0ff3;
-  animation:glowPulse 2s infinite alternate;
-}
-
-@keyframes glowPulse {
-  from { box-shadow:0 0 20px #0ff5, inset 0 0 5px #0ff2; }
-  to { box-shadow:0 0 40px #0ff8, inset 0 0 15px #0ff3; }
-}
-
-.glow-text {
-  font-size:2.5rem;
-  display: flex;
-  text-align:center;
-  text-shadow:0 0 15px #0ff, 0 0 30px #0ff7;
-}
-
-.glow-sub {
-  text-align:center;
-  color:#7ff;
-  text-shadow:0 0 8px #0ff6;
-  margin-bottom:0.5rem;
-}
-
-.holo-form {
-  display:flex;
-  flex-direction:column;
-  gap:0.8rem;
-  margin-top:1rem;
-}
-
-.holo-form label {
-  font-weight:bold;
-  text-shadow:0 0 5px #0ff;
-}
-
-.required {
-  color:red;
-  font-weight:bold;
-}
-
-.holo-form input, .holo-form textarea {
-  background:rgba(0,255,255,0.05);
-  border:1px solid #0ff6;
-  color:#0ff;
-  padding:0.5rem;
-  border-radius:8px;
-  outline:none;
-  box-shadow:inset 0 0 5px #0ff3;
-}
-
-.button {
-  margin-top:1rem;
-  padding:0.7rem;
-  background:linear-gradient(90deg,#4f46e5,#0ff);
-  border:none;
-  border-radius:10px;
-  color:#fff;
-  font-weight:bold;
-  cursor:pointer;
-  box-shadow:0 0 20px #0ff6;
-}
-
-.holo-section {
-  margin-top:1.5rem;
-  border:1px dashed #0ff8;
-  padding:1rem;
-  border-radius:10px;
-  background:rgba(0,255,255,0.05);
-}
-
-.section-title {
-  font-size:1.3rem;
-  margin-bottom:0.5rem;
-  color:#0ff;
-  text-shadow:0 0 5px #0ff;
-}
-
-.holo-list li {
-  margin:0.3rem 0;
-  text-shadow:0 0 5px #0ff;
+  // ✅ Download CV as PDF
+  const downloadBtn = document.getElementById('downloadBtn');
+  if (downloadBtn) {
+    downloadBtn.addEventListener('click', () => {
+      const cvSection = document.querySelector('.cv-container'); // wrapper div of CV
+      html2canvas(cvSection, { scale: 2 }).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
+        const width = pdf.internal.pageSize.getWidth();
+        const height = (canvas.height * width) / canvas.width;
+        pdf.addImage(imgData, 'PNG', 0, 0, width, height);
+        pdf.save('My_CV.pdf');
+      });
+    });
+  }
 }
