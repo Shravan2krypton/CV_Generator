@@ -116,3 +116,13 @@ body {
   text-shadow:0 0 5px #0ff;
 }
 
+.cv-container {
+  width: 794px;       /* A4 width in pixels at 96 DPI */
+  min-height: 1123px; /* A4 height */
+  background: #000;   /* Keep hologram background */
+  color: #0ff;
+  padding: 20px;
+  margin: auto;
+  border-radius: 15px;
+  box-shadow: 0 0 20px #0ff;
+}
