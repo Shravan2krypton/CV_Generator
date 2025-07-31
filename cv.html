@@ -5,23 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Your Hologram CV</title>
   <link rel="stylesheet" href="style.css">
-  <!-- Libraries for PDF Download -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
-
-  <!-- ✅ CV Container for PDF -->
-  <div class="cv-container">
-    <!-- Avatar -->
-    <div class="avatar">
-      <img id="cvPhoto" alt="Profile Photo">
+  <div class="holo-container cv-container">
+    <!-- Photo -->
+    <div class="avatar" style="text-align:center;">
+      <img id="cvPhoto" alt="Profile Photo" style="width:150px; height:150px; border-radius:50%; border:3px solid #0ff; box-shadow:0 0 20px #0ff;">
     </div>
 
     <!-- Name & Contact -->
     <h1 class="glow-text" id="cvName"></h1>
     <p class="glow-sub" id="cvEmail"></p>
     <p class="glow-sub" id="cvPhone"></p>
+    <p class="glow-sub" id="cvAddress"></p>
+    <p class="glow-sub" id="cvLinkedin"></p>
+    <p class="glow-sub" id="cvWebsite"></p>
 
     <!-- About -->
     <div class="holo-section">
@@ -46,10 +46,22 @@
       <h2 class="section-title">Education</h2>
       <p id="cvEducation"></p>
     </div>
-  </div>
 
-  <!-- ✅ Download Button -->
-  <button id="downloadBtn" class="button">Download CV</button>
+    <!-- Projects -->
+    <div class="holo-section">
+      <h2 class="section-title">Projects</h2>
+      <p id="cvProjects"></p>
+    </div>
+
+    <!-- Certifications -->
+    <div class="holo-section">
+      <h2 class="section-title">Certifications</h2>
+      <p id="cvCertifications"></p>
+    </div>
+
+    <!-- Download Button -->
+    <button id="downloadBtn" class="button">Download CV</button>
+  </div>
 
   <script src="script.js"></script>
 </body>
