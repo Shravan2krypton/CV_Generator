@@ -3,17 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title> CV Generator</title>
+  <title>Hologram CV Generator</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="holo-container">
-    <h1 class="glow-text">CV Generator</h1>
-    <form id="cvForm" class="holo-form">
-        
-      <label>Profile Photo <span class="required">*</span></label>
-      <input type="file" id="photo" accept="image/*" required>
+    <h1 class="glow-text">Hologram CV Generator</h1>
+    <form id="cvForm" class="cv-form">
 
+      <!-- Personal Details -->
       <label>Full Name <span class="required">*</span></label>
       <input type="text" id="name" required>
 
@@ -23,17 +21,42 @@
       <label>Phone <span class="required">*</span></label>
       <input type="text" id="phone" required>
 
-      <label>About You <span class="required">*</span></label>
-      <textarea id="about" rows="4" required></textarea>
+      <label>Address</label>
+      <textarea id="address"></textarea>
 
-      <label>Skills (comma separated)</label>
-      <input type="text" id="skills">
+      <label>Portfolio / Website</label>
+      <input type="url" id="website">
 
-      <label>Experience</label>
-      <textarea id="experience" rows="3"></textarea>
+      <label>LinkedIn</label>
+      <input type="url" id="linkedin">
 
-      <label>Education</label>
-      <textarea id="education" rows="3"></textarea>
+      <!-- Photo Upload -->
+      <label>Upload Profile Photo <span class="required">*</span></label>
+      <input type="file" id="photo" accept="image/*" required>
+
+      <!-- About -->
+      <label>About Me <span class="required">*</span></label>
+      <textarea id="about" required></textarea>
+
+      <!-- Skills -->
+      <label>Skills (comma separated) <span class="required">*</span></label>
+      <input type="text" id="skills" placeholder="HTML, CSS, JS" required>
+
+      <!-- Experience -->
+      <label>Experience <span class="required">*</span></label>
+      <textarea id="experience" placeholder="Company - Role - Duration" required></textarea>
+
+      <!-- Education -->
+      <label>Education <span class="required">*</span></label>
+      <textarea id="education" placeholder="Degree - Institution - Year" required></textarea>
+
+      <!-- Projects -->
+      <label>Projects</label>
+      <textarea id="projects" placeholder="Project Name - Description"></textarea>
+
+      <!-- Certifications -->
+      <label>Certifications</label>
+      <textarea id="certifications" placeholder="Course - Provider - Year"></textarea>
 
       <button type="submit" class="button">Generate CV</button>
     </form>
