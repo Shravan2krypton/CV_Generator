@@ -53,19 +53,47 @@ if (window.location.pathname.includes('cv.html')) {
     }
   }
 
-  // ✅ Download CV as PDF
-  const downloadBtn = document.getElementById('downloadBtn');
+  /  const downloadBtn = document.getElementById('downloadBtn');
+
   if (downloadBtn) {
     downloadBtn.addEventListener('click', () => {
-      const cvSection = document.querySelector('.cv-container'); // wrapper div of CV
-      html2canvas(cvSection, { scale: 2 }).then(canvas => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
-        const width = pdf.internal.pageSize.getWidth();
-        const height = (canvas.height * width) / canvas.width;
-        pdf.addImage(imgData, 'PNG', 0, 0, width, height);
-        pdf.save('My_CV.pdf');
+      const cvSection = document.querySelector('.cv-container');
+
+      // Make sure fonts are loaded before capturing
+      document.fonts.ready.then(() => {
+        html2canvas(cvSection, {
+          scale: 2, // better resolution
+          useCORS: true, // for images/fonts hosted elsewhere
+          allowTaint: true
+        }).then(canvas => {
+          const imgData = canvas.toDataURL('image/png');
+          const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
+
+          const pageWidth = pdf.internal.pageSize.getWidth();
+          const pageHeight = pdf.internal.pageSize.getHeight();
+
+          const imgWidth = pageWidth;
+          const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+          let heightLeft = imgHeight;
+          let position = 0;
+
+          // Add first page
+          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+
+          // Add more pages if content exceeds 1 page
+          while (heightLeft > 0) {
+            position = heightLeft - imgHeight;
+            pdf.addPage();
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+          }
+
+          pdf.save('My_CV.pdf');
+        });
       });
     });
   }
 }
+
